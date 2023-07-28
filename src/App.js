@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './styles/app.css';
 import PostList from './components/PostList';
 import MyButton from "./components/UI/button/MyButton";
+import MyInput from "./components/UI/input/MyInput";
 
 function App() {
   
@@ -14,8 +15,8 @@ function App() {
   return (
     <div className="App">
       <form>
-        <input type="text" placeholder="Post name" />
-        <input type="text" placeholder="Post desc" />
+        <MyInput type="text" placeholder="Post name" />
+        <MyInput type="text" placeholder="Post desc" />
         <MyButton>Create post</MyButton>
       </form>
       <PostList posts={posts} title='Posts about JS' />
