@@ -1,8 +1,9 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import './styles/app.css';
 import PostList from './components/PostList';
 import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
+import PostForm from "./components/PostForm";
 
 function App() {
   
@@ -12,35 +13,26 @@ function App() {
     {id: 3, title: 'Javascript 3', body: 'Description'}
   ])
 
-  const [post, setPost] = useState({title: '', body: ''})
+  const createPost = (newPost) => {
+      setPosts([...posts, newPost])
+  }
 
-  const addNewPost = (e) => {
-      e.preventDefault()
-      setPosts([...posts, {...post, id:Date.now()}])
-      setPost({title: '', body: ''})
+  const removePost = (post) => {
+      setPosts(posts.filter(p => p.id !== post.id))
   }
 
   return (
     <div className="App">
-      <form>
-
-        <MyInput
-            value={post.title}
-            onChange={e => setPost(
-                {...post, title: e.target.value})}
-            type="text"
-            placeholder="Post name" />
-        <MyInput
-            value={post.body}
-            onChange={e => setPost(
-                {...post, body: e.target.value})}
-            type="text"
-            placeholder="Post desc" />
-        <MyButton onClick={addNewPost}>Create post</MyButton>
-      </form>
-      <PostList posts={posts} title='Posts about JS' />
+      <PostForm create={createPost} />
+        {posts.length
+            ? <PostList remove={removePost} posts={posts} title='Posts about JS' />
+            :
+            <h1 style={{textAlign: "center", color: "teal"}}>
+                Posts not found
+            </h1>
+        }
     </div>
   );
-};
+}
 
 export default App;
